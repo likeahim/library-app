@@ -1,4 +1,4 @@
-package com.rent.library.controller;
+package com.rent.library.controller.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

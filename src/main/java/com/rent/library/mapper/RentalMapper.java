@@ -5,6 +5,8 @@ import com.rent.library.domain.Rental;
 import com.rent.library.domain.dto.RentalDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RentalMapper {
 
@@ -26,5 +28,11 @@ public class RentalMapper {
                 rental.getRentDate(),
                 rental.getReturnDate()
         );
+    }
+
+    public List<RentalDto> mapToRentalDtoList(List<Rental> rentals) {
+        return rentals.stream()
+                .map(this::mapToRentalDto)
+                .toList();
     }
 }
