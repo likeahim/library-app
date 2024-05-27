@@ -1,5 +1,6 @@
 package com.rent.library.controller;
 
+import com.rent.library.controller.exception.TitleNotFoundException;
 import com.rent.library.domain.Title;
 import com.rent.library.domain.dto.TitleDto;
 import com.rent.library.mapper.TitleMapper;
@@ -24,6 +25,11 @@ public class TitleController {
     public ResponseEntity<List<TitleDto>> getAllTitles() {
         List<Title> titles = service.getAllTitles();
         return ResponseEntity.ok(mapper.mapToTitleDtoList(titles));
+    }
+
+    @GetMapping(value = "{id}")
+    public ResponseEntity<TitleDto> getTitleById(@PathVariable Long id) throws TitleNotFoundException {
+        return ResponseEntity.ok(mapper.mapToTitleDto(service.getTitle(id)));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
