@@ -3,6 +3,7 @@ package com.rent.library.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +28,6 @@ public class User {
     @Column(name = "lastname")
     private String lastname;
 
-    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "created")
     private LocalDate created;

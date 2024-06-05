@@ -2,6 +2,7 @@ package com.rent.library.mapper;
 
 import com.rent.library.domain.Copy;
 import com.rent.library.domain.Status;
+import com.rent.library.domain.Title;
 import com.rent.library.domain.dto.CopyDto;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,10 @@ import java.util.List;
 @Service
 public class CopyMapper {
 
-    public Copy mapToCopy(final CopyDto copyDto, final Long titleId) {
+    public Copy mapToCopy(final CopyDto copyDto, final Title title) {
         return new Copy(
                 copyDto.getId(),
-                titleId,
+                title,
                 Status.valueOf(copyDto.getStatus())
         );
     }
@@ -21,7 +22,7 @@ public class CopyMapper {
     public CopyDto mapToCopyDto(final Copy copy) {
         return new CopyDto (
                 copy.getId(),
-                copy.getTitleId(),
+                copy.getTitleId().getId(),
                 copy.getStatus().toString()
         );
     }
@@ -30,13 +31,5 @@ public class CopyMapper {
         return copyList.stream()
                 .map(this::mapToCopyDto)
                 .toList();
-    }
-
-    public Copy changeStatus(final Copy copy, final Status status) {
-        return new Copy(
-                copy.getId(),
-                copy.getTitleId(),
-                status
-        );
     }
 }

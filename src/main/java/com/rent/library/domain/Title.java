@@ -1,9 +1,6 @@
 package com.rent.library.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter //for tests
 @Entity(name = "titles")
 public class Title {
 
@@ -28,6 +26,11 @@ public class Title {
     @Column(name = "pub_year")
     private int pubYear;
 
-    @OneToMany(mappedBy = "titleId")
+    @OneToMany(
+            targetEntity = Copy.class,
+            mappedBy = "titleId",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
     private List<Copy> copies = new ArrayList<>();
 }

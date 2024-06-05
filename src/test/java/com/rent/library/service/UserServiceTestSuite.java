@@ -1,23 +1,21 @@
-package com.rent.library;
+package com.rent.library.service;
 
 import com.rent.library.controller.exception.UserNotFoundException;
 import com.rent.library.domain.User;
 import com.rent.library.repository.UserRepository;
-import com.rent.library.service.UserService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
@@ -25,8 +23,6 @@ public class UserServiceTestSuite {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
 
     @Test
     public void testAddUser() {

@@ -1,25 +1,24 @@
-package com.rent.library;
+package com.rent.library.service;
 
 import com.rent.library.controller.exception.CopyNotFoundException;
 import com.rent.library.domain.Copy;
 import com.rent.library.domain.Status;
+import com.rent.library.domain.Title;
 import com.rent.library.mapper.CopyMapper;
 import com.rent.library.repository.CopyRepository;
-import com.rent.library.service.CopyService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
@@ -29,8 +28,6 @@ public class CopyServiceTestSuite {
     private CopyService copyService;
     @Autowired
     private CopyRepository copyRepository;
-    @Autowired
-    private CopyMapper copyMapper;
 
     @Test
     public void testGetCopy() throws CopyNotFoundException {
@@ -51,12 +48,12 @@ public class CopyServiceTestSuite {
     public void testGetListCopy() {
         //Given
         Copy copy = new Copy();
-        Long titleId = copy.getTitleId();
-        copy.setStatus(Status.AVAILABLE);
+        Title title = copy.getTitleId();
+        copyService.changeStatus(copy, Status.AVAILABLE);
         copyRepository.save(copy);
 
         //When
-        List<Copy> copies = copyService.getCopies(titleId, Status.AVAILABLE);
+        List<Copy> copies = copyService.getCopies(title, Status.AVAILABLE);
 
         //Then
         assertEquals(1, copies.size());
@@ -65,7 +62,7 @@ public class CopyServiceTestSuite {
     @Test
     public void testAddCopy() {
         //Given
-        Copy copy = new Copy(100L, 100L, Status.AVAILABLE);
+        Copy copy = new Copy(100L, new Title(), Status.AVAILABLE);
 
         //When
         copyRepository.save(copy);
@@ -77,10 +74,10 @@ public class CopyServiceTestSuite {
     @Test
     public void testChangeStatus() {
         //Given
-        Copy copy = new Copy(100L, 100L, Status.AVAILABLE);
+        Copy copy = new Copy(100L, new Title(), Status.AVAILABLE);
 
         //When
-        Copy copy1 = copyMapper.changeStatus(copy, Status.DESTROYED);
+        Copy copy1 = copyService.changeStatus(copy, Status.DESTROYED);
 
         //Then
         assertEquals(Status.DESTROYED, copy1.getStatus());

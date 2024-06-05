@@ -2,28 +2,31 @@ package com.rent.library.mapper;
 
 import com.rent.library.domain.Copy;
 import com.rent.library.domain.Rental;
+import com.rent.library.domain.User;
 import com.rent.library.domain.dto.RentalDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class RentalMapper {
 
-    public Rental mapToRental(final RentalDto rentalDto, final Copy copy) {
+    public Rental mapToRental(final Long rentalId, final Copy copy, final User user) {
+        LocalDate rentDate = LocalDate.now();
         return new Rental(
-                rentalDto.getId(),
-                rentalDto.getUserId(),
+                rentalId,
+                user,
                 copy,
-                rentalDto.getRentDate(),
-                rentalDto.getReturnDate()
+                rentDate,
+                rentDate.plusDays(30)
         );
     }
 
     public RentalDto mapToRentalDto(final Rental rental) {
         return new RentalDto(
                 rental.getId(),
-                rental.getUserId(),
+                rental.getUserId().getId(),
                 rental.getCopyId().getId(),
                 rental.getRentDate(),
                 rental.getReturnDate()

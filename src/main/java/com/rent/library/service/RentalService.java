@@ -1,7 +1,9 @@
 package com.rent.library.service;
 
 import com.rent.library.controller.exception.RentalNotFoundException;
+import com.rent.library.controller.exception.UserNotFoundException;
 import com.rent.library.domain.Rental;
+import com.rent.library.domain.User;
 import com.rent.library.repository.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,9 @@ public class RentalService {
 
     public Rental getRental(final Long id) throws RentalNotFoundException {
         return rentalRepository.findById(id).orElseThrow(RentalNotFoundException::new);
+    }
+
+    public List<Rental> getRentalsByUser(final User user) throws UserNotFoundException {
+        return rentalRepository.findByUserId(user);
     }
 }

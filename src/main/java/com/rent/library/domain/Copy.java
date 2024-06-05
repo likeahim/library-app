@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter //for tests
 @Entity(name = "copies")
 public class Copy {
 
@@ -18,11 +19,11 @@ public class Copy {
     @GeneratedValue
     private Long id;
 
+    @ManyToOne
     @JoinColumn(name = "title_id")
-    private Long titleId;
+    private Title titleId;
 
     @NotNull
-    @Setter
     @Column(name = "status")
     private Status status;
 

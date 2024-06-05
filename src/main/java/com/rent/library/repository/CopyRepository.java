@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface CopyRepository extends CrudRepository<Copy, Long> {
 
-    List<Copy> findCopiesByTitleIdAndStatus(Long titleId, Status status);
+    List<Copy> findCopiesByTitleIdAndStatus(Title title, Status status);
 
 }
